@@ -19,12 +19,17 @@
         <TextBox x:Name="txbPostcode" HorizontalAlignment="Left" Margin="220,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="26" VerticalContentAlignment="Center"/>
         <TextBox x:Name="txbWoonplaats" HorizontalAlignment="Left" Margin="220,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="26" VerticalContentAlignment="Center"/>
         <TextBox x:Name="txbBedrag" HorizontalAlignment="Left" Margin="220,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="26" VerticalContentAlignment="Center"/>
-        <Button x:Name="btnAdd" Content="Voeg toe" HorizontalAlignment="Left" Margin="379,111,0,0" VerticalAlignment="Top" Height="26" Width="150"/>
-        <Button x:Name="btnStorting" Content="Storting" HorizontalAlignment="Left" Margin="379,240,0,0" VerticalAlignment="Top" Height="26" Width="150"/>
-        <Button x:Name="btnOphaling" Content="Ophaling" HorizontalAlignment="Left" Margin="379,271,0,0" VerticalAlignment="Top" Height="26" Width="150"/>
+        <Button x:Name="btnAdd" Content="Voeg toe" HorizontalAlignment="Left" Margin="379,111,0,0" VerticalAlignment="Top" Height="26" Width="150" Click="btnAdd_Click"/>
+        <Button x:Name="btnStorting" Content="Storting" HorizontalAlignment="Left" Margin="379,240,0,0" VerticalAlignment="Top" Height="26" Width="150" Click="btnStorting_Click" IsEnabled="False"/>
+        <Button x:Name="btnOphaling" Content="Ophaling" HorizontalAlignment="Left" Margin="379,271,0,0" VerticalAlignment="Top" Height="26" Width="150" Click="btnOphaling_Click" IsEnabled="False"/>
         <Label x:Name="lblBankrekening" Content="Bankrekeningen" HorizontalAlignment="Left" Margin="550,40,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
         <ListBox x:Name="lsbBankrekeningen" d:ItemsSource="{d:SampleData ItemCount=0
-            }" Margin="550,80,0,0" HorizontalAlignment="Left" Width="209" Height="186" VerticalAlignment="Top"/>
+            }" Margin="550,80,0,0" HorizontalAlignment="Left" Width="209" Height="186" VerticalAlignment="Top" SelectionChanged="lsbBankrekeningen_SelectionChanged"/>
+        <Label x:Name="lblOverschrijving" Content="Overschrijving" HorizontalAlignment="Left" Margin="50,313,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+        <ComboBox x:Name="cmbVan" HorizontalAlignment="Left" Margin="50,349,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cmbNaar" HorizontalAlignment="Left" Margin="50,376,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnOverschrijven" Content="Schrijf over" HorizontalAlignment="Left" Margin="220,349,0,0" VerticalAlignment="Top" Height="22" Width="120" Click="btnOverschrijven_Click" IsEnabled="False"/>
+        <Label x:Name="lblSaldo" Content="" HorizontalAlignment="Left" Margin="550,271,0,0" VerticalAlignment="Top" Height="127" Width="209"/>
 
     </Grid>
 </Window>
