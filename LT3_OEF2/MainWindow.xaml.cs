@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LT3_OEF1
+namespace LT3_OEF2
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -24,6 +24,7 @@ namespace LT3_OEF1
         int maxPerDag = 7;
         Bankrekening[] bankrekening = new Bankrekening[7];
         int rekeningnummercount = 0;
+        bool zoeken = true;
         public MainWindow()
         {
             InitializeComponent();
@@ -57,7 +58,7 @@ namespace LT3_OEF1
         {
             try
             {
-                
+
                 bankrekening[rekeningnummercount] = new Bankrekening();
                 bankrekening[rekeningnummercount].Name = txbNaam.Text;
                 bankrekening[rekeningnummercount].Adres = txbAdres.Text;
@@ -141,7 +142,7 @@ namespace LT3_OEF1
             }
             catch
             {
-                if(txbBedrag.Text != null)
+                if (txbBedrag.Text != null)
                 {
                     MessageBox.Show("Je hebt een verkeerde waarde ingegeven");
                 }
@@ -162,13 +163,78 @@ namespace LT3_OEF1
 
 
         }
-        public int rekeningSearch(string cmbText)//zoekt naar het juiste rekeningsnummer vanuit de gegeven combobox om zo dan een overschrijving te kunnen doen
+
+        public void labelUpdate()//updatet het saldolabel om visualisatie te voorzien
+        {
+            int imax = lsbBankrekeningen.Items.Count;
+            lblSaldo.Content = "";
+            for (int i = 0; i < imax; i++)
+            {
+                lblSaldo.Content = $"{lblSaldo.Content}\nSaldo rekening {i + 1}= $ {Math.Round(bankrekening[i].Saldo, 2)}";
+            }
+        }
+
+        private void txbZoeken_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (zoeken)
+            {
+                zoeken = false;
+                txbZoeken.Clear();
+            }
+        }
+
+        private void txbZoeken_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (txbZoeken.Text == "")
+            {
+                txbZoeken.Text = "Naam/Adres/Postcode/Woonplaats";
+                zoeken = true;
+            }
+        }
+
+        private void btnZoeken_Click(object sender, RoutedEventArgs e)//zoekt iedere waarde uit iedere class en kijkt of deze gelijk is aan de gegeven waarde indien niet geeft hij een messagebox met die error indien wel toont hij de gegevens van deze persoon
+        {
+            int index = 69;
+
+            if (index == 69)
+            {
+                index = naamSearch(txbZoeken.Text);
+            }
+            if (index == 69)
+            {
+                index = AdresSearch(txbZoeken.Text);
+            }
+            if (index == 69)
+            {
+                index = PostcodeSearch(txbZoeken.Text);
+            }
+            if (index == 69)
+            {
+                index = WoonplaatsSearch(txbZoeken.Text);
+            }
+            if (index == 69)
+            {
+                MessageBox.Show("gebruiker niet gevonden. Check gegevens.");
+            }
+            else
+            {
+                MessageBox.Show($"Naam: {bankrekening[index].Name}\nAdres: {bankrekening[index].Adres}\nPostcode: {bankrekening[index].Postcode.ToString()}\nWoonplaats: {bankrekening[index].Woonplaats}\nRekeningsnummer: {bankrekening[index].RekeningNummer}\nSaldo: {bankrekening[index].Saldo}");
+
+            }
+
+
+
+
+
+
+        }
+        public int rekeningSearch(string Text)//zoekt naar het juiste rekeningsnummer vanuit de gegeven waarde om zo dan een overschrijving te kunnen doen
         {
             bool search = true;
             int i = 0;
             do
             {
-                if (cmbText == bankrekening[i].RekeningNummer)
+                if (Text == bankrekening[i].RekeningNummer)
                 {
                     search = false;
                 }
@@ -183,18 +249,127 @@ namespace LT3_OEF1
             while (search);
             return i;
         }
-        public void labelUpdate()//updatet het saldolabel om visualisatie te voorzien
+        public int naamSearch(string Text)//zoekt naar de juiste naam vanuit de gegeven waarde om zo dan een overschrijving te kunnen doen
         {
+            bool search = true;
+            int i = 0;
             int imax = lsbBankrekeningen.Items.Count;
-            lblSaldo.Content = "";
-            for (int i = 0; i < imax; i++)
+
+
+            do
             {
-                lblSaldo.Content = $"{lblSaldo.Content}\nSaldo rekening {i+1}= $ {Math.Round(bankrekening[i].Saldo,2)}";
+                if (i == imax)
+                {
+                    return 69;
+                }
+                else if (Text == bankrekening[i].Name)
+                {
+                    search = false;
+                }
+                else
+                {
+                    i++;
+                }
+
+
+
             }
+            while (search);
+            return i;
         }
+        public int PostcodeSearch(string Text)//zoekt naar de juiste postcode vanuit de gegeven waarde om zo dan een overschrijving te kunnen doen
+        {
+            bool search = true;
+            int i = 0;
+            int imax = lsbBankrekeningen.Items.Count;
+
+
+            do
+            {
+                if (i == imax)
+                {
+                    return 69;
+                }
+                else if (Text == bankrekening[i].Postcode.ToString())
+                {
+                    search = false;
+                }
+                else
+                {
+                    i++;
+                }
+
+
+
+            }
+            while (search);
+            return i;
+        }
+
+        public int WoonplaatsSearch(string Text)//zoekt naar de juiste woonplaats vanuit de gegeven waarde om zo dan een overschrijving te kunnen doen
+        {
+            bool search = true;
+            int i = 0;
+            int imax = lsbBankrekeningen.Items.Count;
+
+
+            do
+            {
+                if (i == imax)
+                {
+                    return 69;
+                }
+                else if (Text == bankrekening[i].Woonplaats)
+                {
+                    search = false;
+                }
+                else
+                {
+                    i++;
+                }
+
+
+
+            }
+            while (search);
+            return i;
+        }
+
+        public int AdresSearch(string Text)//zoekt naar het juiste adress vanuit de gegeven combobox om zo dan een overschrijving te kunnen doen
+        {
+            bool search = true;
+            int i = 0;
+            int imax = lsbBankrekeningen.Items.Count;
+
+
+            do
+            {
+                if (i == imax)
+                {
+                    return 69;
+                }
+                else if (Text == bankrekening[i].Adres)
+                {
+                    search = false;
+                }
+                else
+                {
+                    i++;
+                }
+
+
+
+            }
+            while (search);
+            return i;
+        }
+
+
+
+
     }
-
-
-
-
 }
+
+
+
+

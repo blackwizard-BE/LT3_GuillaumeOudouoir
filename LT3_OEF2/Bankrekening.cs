@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LT3_OEF1
+namespace LT3_OEF2
 {
     internal class Bankrekening
     {//voegt alle waarden toe 
